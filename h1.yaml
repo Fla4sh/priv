@@ -1,0 +1,26 @@
+id: h1-spoofing
+
+info:
+  name: H1 Content Spoofing Fuzzer
+  author: SirBugs
+  severity: low
+  tags: content, spoofing, html
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    payloads:
+      reflection:
+        - "<h1>reflection</h1>"
+    fuzzing:
+      - part: query
+        type: postfix
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "<h1>reflection</h1>"

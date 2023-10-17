@@ -1,0 +1,28 @@
+id: social-media-links-extractor
+info:
+  name: Social Media Links Extractor
+  author: yourname
+  severity: info
+
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+    extractors:
+      - type: regex
+        name: twitter
+        regex:
+          - "(https?://)?(www\\.)?twitter\\.com/[A-Za-z0-9_.-]*"
+
+      - type: regex
+        name: instagram
+        regex:
+          - "(https?://)?(www\\.)?instagram\\.com/[A-Za-z0-9_.-]*"
+
+      - type: regex
+        name: facebook
+        regex:
+          - "(https?://)?(www\\.)?facebook\\.com/[A-Za-z0-9_.-]*"

